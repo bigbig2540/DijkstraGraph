@@ -22,7 +22,7 @@ graphMatrix = dict()
 
 
 def genGraphMatrix():
-    df = pd.read_csv('matrix2.csv')
+    df = pd.read_csv('matrix3.csv')
     graphMatrix = dict()
    
     for x in range (0 , df.shape[0]):
@@ -91,8 +91,8 @@ currentNode = ""
 graphMatrix = genGraphMatrix()
 result = genResultMatrix()
 
-
-print(graphMatrix)
+for node,value in graphMatrix.items():
+    print(node , ' ' , value)
 
 startNode = input("input Start Node : ")
 
@@ -103,19 +103,25 @@ result[startNode] = ['T',0,-1]
 currentNode = startNode
 
 if len(graphMatrix[destinationNode])==0 :
-    print("No Path Found Destination Node is Isolate")
+    print("\nNo Path Found Destination Node is Isolate")
     
 else:
     while True :
 #        print(result , currentNode)
         if result[destinationNode][0] == 'T':
+            print('\nTotal Distance : ',result[destinationNode][1])
+            printPath(result,destinationNode,startNode)
             break
+        
+        if currentNode == '':
+            print("\nNo Path Connect From Start To Destination")
+            break;
     
         result=adjNodeUpdate(currentNode , result , graphMatrix[currentNode] )
          
         currentNode = findLeastCost(result)
+        
     
-    print('Total Distance : ',result[destinationNode][1])
-    printPath(result,destinationNode,startNode)
+    
 #    
 
